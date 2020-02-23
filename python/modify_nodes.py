@@ -219,7 +219,7 @@ class CleanupAST(ast.NodeTransformer):
     node.body = self.cleanBody(node.body)
     return node
 
-  def visit_If(self, node: ast.FunctionDef):
+  def visit_If(self, node: ast.If):
     """
     Examine if statement and clean up if necessary
     :param node: ast.FunctionDef to analyze
@@ -227,6 +227,64 @@ class CleanupAST(ast.NodeTransformer):
     """
     super().generic_visit(node)
 
+    node.body = self.cleanBody(node.body)
+    node.orelse = self.cleanBody(node.orelse)
+    return node
+
+  def visit_For(self, node: ast.For):
+    """
+    Examine if statement and clean up if necessary
+    :param node: ast.FunctionDef to analyze
+    :return: None
+    """
+    super().generic_visit(node)
+
+    node.body = self.cleanBody(node.body)
+    node.orelse = self.cleanBody(node.orelse)
+    return node
+
+  def visit_While(self, node: ast.While):
+    """
+    Examine if statement and clean up if necessary
+    :param node: ast.FunctionDef to analyze
+    :return: None
+    """
+    super().generic_visit(node)
+
+    node.body = self.cleanBody(node.body)
+    node.orelse = self.cleanBody(node.orelse)
+    return node
+
+  def visit_With(self, node: ast.With):
+    """
+    Examine with statement
+    :param node: ast.FunctionDef to analyze
+    :return: None
+    """
+    super().generic_visit(node)
+
+    node.body = self.cleanBody(node.body)
+    return node
+
+  def visit_Try(self, node: ast.Try):
+    """
+    Examine try statement
+    :param node: ast.FunctionDef to analyze
+    :return: None
+    """
+    super().generic_visit(node)
+
+    node.body = self.cleanBody(node.body)
+    node.finalbody = self.cleanBody(node.finalbody)
+    return node
+
+  def visit_TryExcept(self, node: ast.Try):
+    """
+    Examine try statement
+    :param node: ast.FunctionDef to analyze
+    :return: None
+    """
+    super().generic_visit(node)
 
     node.body = self.cleanBody(node.body)
     node.orelse = self.cleanBody(node.orelse)
